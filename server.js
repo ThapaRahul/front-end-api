@@ -2,6 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
+const knex = require('knex');
+
+const postgres = knex({
+    client: 'postgres',
+    connection: {
+        host: '127.0.0.1',
+        user: 'postgres',
+        password: '052Az2S%',
+        database: 'smartbrain'
+    }
+});
+
+console.log(postgres.select('*').from('users'));
 
 const app = express();
 
@@ -39,13 +52,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req, res) => {
-    bcrypt.compare("apples", "$2a$10$dIdQ/4t5x21/B8Ibx0PA5OAkdUTuUiA84il6SN0eIun3mmZHav5l.", function(err, res) {
-        console.log("First Guess", res);
-    });
+    bcrypt.compare("apples", "$2a$10$dIdQ/4t5x21/B8Ibx0PA5OAkdUTuUiA84il6SN0eIun3mmZHav5l.", function(err, res) {});
 
-    bcrypt.compare("bacon", "$2a$10$dIdQ/4t5x21/B8Ibx0PA5OAkdUTuUiA84il6SN0eIun3mmZHav5l.", function(err, res) {
-        console.log("Second Guess", res);
-    });
+    bcrypt.compare("bacon", "$2a$10$dIdQ/4t5x21/B8Ibx0PA5OAkdUTuUiA84il6SN0eIun3mmZHav5l.", function(err, res) {});
 
     if (req.body.email === database.users[0].email &&
         req.body.password === database.users[0].password) {
